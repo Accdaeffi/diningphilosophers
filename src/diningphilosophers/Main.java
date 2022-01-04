@@ -2,26 +2,18 @@ package diningphilosophers;
 
 public class Main {
 
-	public static void main(String[] args) {
-		System.out.println("hello world!");
-		
-		Fork firstFork = new Fork();
-		Fork secondFork = new Fork();
-		Fork thirdFork = new Fork();
-		Fork fourthFork = new Fork();
-		Fork fifthFork = new Fork();
-		
-		Philosopher firstPhil = new Philosopher(0, firstFork, fifthFork);
-		Philosopher secondPhil =  new Philosopher(1, secondFork, firstFork);
-		Philosopher thirdPhil = new Philosopher(2, thirdFork, secondFork);
-		Philosopher fourthPhil =  new Philosopher(3, fourthFork, thirdFork);
-		Philosopher fifthPhil =  new Philosopher(4, fifthFork, fourthFork);
-		
-		firstPhil.start();
-		secondPhil.start();
-		thirdPhil.start();
-		fourthPhil.start();
-		fifthPhil.start();
+	private final static int COUNT = 5;
+	
+	public static void main(String[] args) {		
+        Fork[] forks = new Fork[COUNT];
+        
+        for(int i = 0; i < COUNT; i++) {
+            forks[i] = new Fork();
+        }
+        
+        for(int i = 0; i < COUNT; i++) {
+            new Thread(new Philosopher(i, forks[i], forks[(i + 1) % COUNT])).start();
+        }
 		
 	}
 
